@@ -11,9 +11,7 @@ class emplTestCase(APITestCase):
 
     def setUp(self):
         """Предварительная настройка."""
-        self.empl = Empl.objects.create(
-            full_name="Тест имя", post="Тест должность"
-        )
+        self.empl = Empl.objects.create(full_name="Тест имя", post="Тест должность")
 
     def test_empl_create(self):
         """Тест на создание модели."""

@@ -13,4 +13,5 @@ class NameValidator:
         tmp_val = dict(value).get(self.field)
         if not bool(reg.match(tmp_val)):
             raise ValidationError(
-                "В поле возможны только буквы, цифры, запятая, точка, тире, пробел.")
+                "В поле возможны только буквы, цифры, запятая, точка, тире, пробел."
+            )

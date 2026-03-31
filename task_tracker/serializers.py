@@ -15,7 +15,8 @@ class TaskSerializer(ModelSerializer):
         fields = "__all__"
         validators = [
             NameValidator(field="name"),
-            UniqueTogetherValidator(fields=["name"], queryset=Task.objects.all()),]
+            UniqueTogetherValidator(fields=["name"], queryset=Task.objects.all()),
+        ]
 
 
 class MainTaskSerializer(ModelSerializer):
@@ -36,7 +37,8 @@ class MainTaskSerializer(ModelSerializer):
             emp_data[emp.pk] = len(list_task)
         min_count = min(emp_data.values())
         available_empl = [
-            emp.full_name for emp in empl if emp_data[emp.pk] == min_count]
+            emp.full_name for emp in empl if emp_data[emp.pk] == min_count
+        ]
         for emp in empl:
             tasks = Task.objects.filter(parent_task=task.id)
             for t in tasks:
