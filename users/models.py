@@ -12,14 +12,12 @@ class User(AbstractUser):
         unique=True,
         verbose_name="Адрес электронной почты",
         max_length=255,
-        help_text="Укажите адрес электронной почты",
-    )
+        help_text="Укажите адрес электронной почты",)
     phone = models.CharField(
         max_length=35,
         verbose_name="Номер телефона",
         help_text="Укажите номер телефона",
-        **NULLABLE
-    )
+        **NULLABLE)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

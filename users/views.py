@@ -3,13 +3,13 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import User
-from users.serializers import MyTokenObtainPairSerializer, UserSerializer
+from users.serializers import TTokenObtainPairSerializer, UserSerializer
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
     """Создание токена."""
 
-    serializer_class = MyTokenObtainPairSerializer
+    serializer_class = TTokenObtainPairSerializer
 
 
 class UserCreateAPIView(CreateAPIView):

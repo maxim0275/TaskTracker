@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     "drf_yasg",
     "django_filters",
     "users.apps.UsersConfig",
-    #"employees.apps.EmplConfig",
+    "empl.apps.EmplConfig",
+    "task_tracker.apps.TaskTrackerConfig",
 ]
 
 REST_FRAMEWORK = {
