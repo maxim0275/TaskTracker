@@ -40,7 +40,7 @@ class TaskDestroyAPIView(DestroyAPIView):
 
 
 class TaskImportantListAPIView(ListAPIView):
-    """Поиск работников с наименьшей загрузкой."""
+    """Просмотр важных задач."""
 
     serializer_class = MainTaskSerializer
     queryset = Task.objects.all()
