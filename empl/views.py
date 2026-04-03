@@ -5,6 +5,7 @@ from rest_framework.generics import (CreateAPIView, DestroyAPIView,
 
 from empl.models import Empl
 from empl.serializers import EmplSerializer, EmplTaskSerializer
+from task_tracker.models import Task
 
 
 class EmplCreateAPIView(CreateAPIView):
@@ -49,8 +50,25 @@ class EmplTaskListAPIView(ListAPIView):
     def get_queryset(self):
         return (
             Empl.objects.annotate(
-                active_tasks_count=Count("tasks", filter=Q(tasks__status="start"))
-            )
+                active_tasks_count=Count("tasks", filter=Q(tasks__status="started"))
+                )
             .filter(active_tasks_count__gt=0)
             .order_by("-active_tasks_count")
         )
+
+
+class EmployeeLessLoadedListAPIView(ListAPIView):
+    serializer_class = EmplTaskSerializer
+
+    def get_queryset(self):
+        qs = Empl.objects.annotate(task_count=Count("tasks"))
+        min_count = qs.orderby("task_count").values_list("task_count").first()
+
+        return (
+            qs.filter(
+                Q(task_count=min_count)
+                |
+                Q(task_count__gte=min_count + 2) & Q(
+                    tasks__in=Task.objects.filter(parent_task__isnull=False).values("parent_task")))
+        )
+

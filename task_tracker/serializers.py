@@ -22,7 +22,7 @@ class TaskSerializer(ModelSerializer):
 class MainTaskSerializer(ModelSerializer):
     """Сериалайзер для поиска работников с наименьшей загрузкой."""
 
-    tasks = TaskSerializer(source="other", many=True)
+    tasks = TaskSerializer(source="depended_tasks", many=True)
     available_empl = SerializerMethodField()
 
     class Meta:
@@ -33,7 +33,7 @@ class MainTaskSerializer(ModelSerializer):
         empl = Empl.objects.all()
         emp_data = {}
         for emp in empl:
-            list_task = emp.tasks.filter(status="start")
+            list_task = emp.tasks.filter(status="started")
             emp_data[emp.pk] = len(list_task)
         min_count = min(emp_data.values())
         available_empl = [

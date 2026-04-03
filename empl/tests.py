@@ -62,7 +62,7 @@ class emplTestCase(APITestCase):
             name="Test task",
             empl=self.empl,
             deadline=None,
-            status="start",
+            status="started",
             parent_task=None,
         )
         url = reverse("empl:empl-task")

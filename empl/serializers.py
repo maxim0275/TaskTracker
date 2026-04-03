@@ -13,7 +13,7 @@ class EmplSerializer(ModelSerializer):
         fields = "__all__"
 
 
-class EmplTaskSerializer(TaskSerializer):
+class EmplTaskSerializer(ModelSerializer):
     """Сериалайзер модели для подсчета активных задач работника."""
 
     tasks = TaskSerializer(many=True, read_only=True)
@@ -30,4 +30,4 @@ class EmplTaskSerializer(TaskSerializer):
         )
 
     def get_active_tasks_count(self, obj):
-        return obj.tasks.filter(status="start").count()
+        return obj.tasks.filter(status="started").count()

@@ -16,7 +16,7 @@ class TaskTestCase(APITestCase):
             parent_task=None,
             empl=None,
             deadline="2026-11-25",
-            status="start",
+            status="started",
         )
 
     def test_task_create(self):
@@ -27,7 +27,7 @@ class TaskTestCase(APITestCase):
             "parent_task": None,
             "empl": None,
             "deadline": "2026-11-25",
-            "status": "start",
+            "status": "started",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -35,7 +35,7 @@ class TaskTestCase(APITestCase):
         self.assertEqual(response.data["parent_task"], None)
         self.assertEqual(response.data["empl"], None)
         self.assertEqual(response.data["deadline"], "2026-11-25")
-        self.assertEqual(response.data["status"], "start")
+        self.assertEqual(response.data["status"], "started")
         self.assertEqual(Task.objects.count(), 2)
 
     def test_task_retrieve(self):
@@ -74,13 +74,24 @@ class TaskTestCase(APITestCase):
     def test_important_task_list(self):
         """Тест поиск менее загруженных работников."""
         empl = Empl.objects.create(full_name="Тест работник", post="Тест пост")
-        Task.objects.create(
+
+        t0 = Task.objects.create(
+            name="Тест задача0",
+            empl=empl,
+            deadline=None,
+            status="created",
+            parent_task=None,
+        )
+
+        t1 = Task.objects.create(
             name="Тест задача",
             empl=empl,
             deadline=None,
-            status="start",
-            parent_task=self.task,
+            status="started",
+            parent_task=t0
         )
+
+
         url = reverse("task_tracker:tracker")
         response = self.client.get(url, format="json")
         data = response.json()

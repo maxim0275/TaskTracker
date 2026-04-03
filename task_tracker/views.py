@@ -43,12 +43,10 @@ class TaskImportantListAPIView(ListAPIView):
     """Просмотр важных задач."""
 
     serializer_class = MainTaskSerializer
-    queryset = Task.objects.all()
 
     def get_queryset(self):
         return Task.objects.filter(
-            other__empl__isnull=False,
-            other__status="start",
-            empl__isnull=True,
-            status="start",
+            status="created",
+            depended_tasks__status="started"
         )
+

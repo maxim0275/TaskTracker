@@ -5,8 +5,9 @@ from empl.models import Empl
 NULLABLE = {"blank": True, "null": True}
 
 TASK_STATUS = [
-    ("start", "start"),
-    ("finish", "finish"),
+    ("created", "created"),
+    ("started", "started"),
+    ("finished", "finished"),
 ]
 
 FATHER_TASK = [("father", "father"), ("other", "other")]
@@ -21,7 +22,7 @@ class Task(models.Model):
     parent_task = models.ForeignKey(
         "self",
         on_delete=models.CASCADE,
-        related_name="other",
+        related_name="depended_tasks",
         help_text="Введите родительскую задачу",
         **NULLABLE
     )
